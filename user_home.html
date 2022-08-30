@@ -1,0 +1,102 @@
+{% extends "home.html" %} {% block title %}{% endblock %} {% block content %}
+<meta charset="UTF-8" />
+<meta name="viewport"  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel='stylesheet'href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+
+
+
+<div class="container">
+
+
+    {% for message in get_flashed_messages() %}
+
+     <div class="alert alert-warning alert-dismissible fade show" role="alert">
+       {{ message }}
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
+
+  
+    {% endfor %} 
+
+      <h2>Kullanıcı Hesabı</h2>
+
+  
+      <div class="card bg-dark text-white">
+    <div class="card-header">
+      {{ current_user.username }}
+    </div>
+    <div class="card-body">
+     
+      <p class="card-text">
+  
+  <div class="container">
+      <div class="row">
+          <div class="col-8">
+  
+  
+      <strong>Kullanıcı Adı:</strong>
+      {{ current_user.username }}<br/>
+  
+  
+      <strong>Email:</strong>
+      {{ current_user.email_address }}<br/>
+  
+     
+  
+      <strong>Kayıt Tarihi:</strong>
+      {{ current_user.date_added }}<br/>
+  
+  
+          
+      </p>
+     
+  
+      <a href="{{ url_for('update', id=current_user.id)}}" class="btn btn-secondary btn-sm">Hesabı Güncelle</a>
+
+      <a href="{{ url_for('create_post', id=current_user.id)}}" class="btn btn-secondary btn-sm">Fikir Paylaş</a>
+
+       <a href="{{ url_for('posts', id=current_user.id)}}" class="btn btn-secondary btn-sm">paylaşımlarım</a>
+
+      <a href="#" class="btn btn-secondary btn-sm">Topluluk Kur</a>
+      
+      <a href="{{ url_for('logout_page')}}" class="btn btn-secondary btn-sm">Çıkış</a>
+  
+      <a href="{{ url_for('delete_page', id=current_user.id)}}" class="btn btn-danger btn-sm">Hesabı Sil</a>
+
+      
+
+     
+      <br/><br/>
+  
+      
+      </div>
+      <div class="col-4">
+          {% if current_user.profile_pic %}
+  
+          <img src="{{ url_for('static', filename='images/' + current_user.profile_pic)}}" width="200" align="right">
+          
+          {% else %}
+  
+          <img src="{{ url_for('static', filename='images/default_profile_pic.png')}}" width="200" align="right">
+  
+          {% endif %}
+      
+      </div>
+      </div>
+      </div>
+  
+
+    </div>
+  </div>
+      
+  
+      
+  <br/>
+  
+
+   
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="{{ url_for('static', filename='likes.js')}}"></script>
+
+{% endblock %}

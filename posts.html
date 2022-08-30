@@ -1,0 +1,53 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  {{ message }}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endfor %}
+
+<br/>
+
+{% for post in posts %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    
+	<h2><a href="{{ url_for('post', post_id=post.id)}}">{{ post.title }}</a></h2>
+	<small>By: {{ post.author.username }}<br/>
+	{{ post.publish_date }}</small> <br/><br/>
+
+	{{ post.post_content|safe }}
+	<br/><br/>
+	<a href="{{ url_for('post', post_id=post.id)}}" class="btn btn-outline-secondary btn-sm">View Post</a>
+    
+<div class="card mb-3">
+		<div class="row no-gutters">
+			<div class="col-md-2">
+				{% if post.author.profile_pic %}
+					<img src="{{ url_for('static', filename='images/' + post.author.profile_pic)}}" width="150" align="left">
+				{% else %}
+					<img src="{{ url_for('static', filename='images/default_profile_pic.png')}}" width="150" align="left">
+				{% endif %}
+			</div>	
+		</div>	
+</div>
+	{% if post.userer_id == current_user.id or current_user.id == 14 %}
+	<a href="{{ url_for('edit_post', post_id=post.id)}}" class="btn btn-outline-secondary btn-sm">Edit Post</a>
+
+	<a href="{{ url_for('delete_post', post_id=post.id)}}" class="btn btn-outline-danger btn-sm">Delete Post</a>
+
+	{% endif %}
+
+	<br/><br/>
+</div>
+<br/>
+{% endfor %}
+
+
+
+
+
+{% endblock %}
